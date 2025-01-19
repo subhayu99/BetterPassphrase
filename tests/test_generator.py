@@ -105,7 +105,7 @@ def test_cli_integration():
     min_length = UNIT_PHRASE_MAX_LENGTH + BUFFER
     max_length = min_length + BUFFER
     temp_file = Path(".temp.txt")
-    command_args_str = f"-l {min_length} -s - -c true -o {temp_file}"
+    command_args_str = f"-l {min_length} -s - -c -o {temp_file}"
     betterpassphrase_cli(command_args_str.split(" "))
     result = temp_file.read_text()
     assert temp_file.exists()
