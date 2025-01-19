@@ -10,6 +10,7 @@ setup(
     author_email="balasubhayu99@gmail.com",
     url="https://github.com/subhayu99/BetterPassphrase",
     packages=find_packages(),
+    license="MIT",
     include_package_data=True,
     classifiers=[
         "Programming Language :: Python :: 3",
