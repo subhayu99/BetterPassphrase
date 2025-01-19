@@ -1,6 +1,6 @@
 # BetterPassphrase
 
-**BetterPassphrase** is a Python library and CLI tool for generating secure, meaningful passphrases. It uses various parts of speech to construct grammatically correct and easy-to-remember phrases.
+**BetterPassphrase** is a Python library and CLI tool for generating _somewhat_ secure, meaningful passphrases. It uses various parts of speech to construct grammatically correct and easy-to-remember phrases.
 
 ---
 
