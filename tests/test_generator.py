@@ -5,11 +5,11 @@ import re
 
 import pytest
 
-from betterpassphrase.cli import main as betterpassphrase_cli
 from betterpassphrase.config import BUFFER
-from betterpassphrase.generator import (
-    generate_phrase,
-    PartsOfSpeech,
+from betterpassphrase.models import PartsOfSpeech
+from betterpassphrase.generator import generate_phrase
+from betterpassphrase.cli import main as betterpassphrase_cli
+from betterpassphrase.mappings import (
     UNIT_PHRASE_LENGTHS,
     UNIT_PHRASE_MIN_LENGTH,
     UNIT_PHRASE_MAX_LENGTH,
@@ -36,6 +36,16 @@ def test_phrase_with_separator():
     phrase = generate_phrase(length=4, sep="-")
     assert "-" in phrase.passphrase
     assert len(phrase.passphrase.split("-")) == 4
+
+
+def test_word_count_and_combinations():
+    in_length = random.choice(UNIT_PHRASE_LENGTHS)
+    phrase = generate_phrase(length=in_length, sep=" ")
+    assert phrase.word_count == len(phrase.words) == len(phrase.combination)
+
+    out_length = UNIT_PHRASE_MAX_LENGTH + BUFFER
+    phrase = generate_phrase(length=out_length, sep=" ")
+    assert phrase.word_count == len(phrase.words) == len(phrase.combination)
 
 
 def test_phrase_capitalization():
@@ -90,12 +100,6 @@ def test_random_word_selection():
         assert isinstance(word, str)
         assert word in part.words
 
-
-def test_get_words():
-    for part in PartsOfSpeech:
-        words = part.get_words(n=5)
-        assert len(words) == 5
-        assert all(word in part.words for word in words)
 
 def test_cli_integration():
     min_length = UNIT_PHRASE_MAX_LENGTH + BUFFER
