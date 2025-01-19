@@ -47,31 +47,50 @@ print(f"Probability: {1 / phrase.one_of:.2e}")
 After installing the package, you can use the `betterpassphrase` command directly from your terminal:
 
 ```bash
-betterpassphrase --length 6 --sep "-" --capitalize true
+betterpassphrase --length 6 --sep "" --capitalize --verbose
 ```
 
 #### Options
 
 | Option            | Short Flag | Description                                   | Default         |
 |-------------------|------------|-----------------------------------------------|-----------------|
-| `--length`        | `-l`       | Number of words in the passphrase            | `6`             |
-| `--sep`           | `-s`       | Separator to use between words               | No separator    |
-| `--capitalize`    | `-c`       | Capitalize the words (true/false)            | `true`          |
-| `--output`        | `-o`       | Save passphrase to a file                    | Print to stdout |
-| `--verbose`       | `-v`       | Print verbose information (true/false)       | `false`         |
+| `--length`        | `-l`       | Number of words in the passphrase             | `6`             |
+| `--sep`           | `-s`       | Separator to use between words                | `-`             |
+| `--capitalize`    | `-c`       | Capitalize the words (true/false)             | `False`         |
+| `--output`        | `-o`       | Save passphrase to a file                     | None            |
+| `--verbose`       | `-v`       | Print verbose information (true/false)        | `False`         |
 
 #### Example CLI Output
 
 ```bash
-$ betterpassphrase --length 8 --sep "-" --capitalize false
+$ betterpassphrase --length 8 --sep "-"
 Generated phrase: the-actor-and-the-subtle-dancer-played-wonderfully
 Word count:       8
+```
+
+To generate a passphrase with capitalization and a custom separator:
+
+```bash
+$ betterpassphrase --length 8 --sep "" --capitalize
+Generated phrase: TheActorAndTheSubtleDancerPlayedWonderfully
+Word count:       8
+```
+
+To write the passphrase to a file:
+
+```bash
+$ betterpassphrase --length 8 --sep "-" --output passphrase.txt
+Generated phrase: the-actor-and-the-subtle-dancer-played-wonderfully
+Word count:       8
+
+$ cat passphrase.txt
+the-actor-and-the-subtle-dancer-played-wonderfully
 ```
 
 Verbose mode can provide additional details:
 
 ```bash
-$ betterpassphrase --length 6 --verbose true
+$ betterpassphrase --length 6 --verbose
 Generated phrase: the-actor-and-the-subtle-dancer-played-wonderfully
 Word count:       8
 Probability:      3.733316339298084e-18
