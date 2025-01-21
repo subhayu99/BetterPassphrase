@@ -1,4 +1,3 @@
-import random
 from enum import Enum
 from pathlib import Path
 from typing import NamedTuple
@@ -126,17 +125,22 @@ class Passphrase(NamedTuple):
     def wordlist_probability(self) -> float:
         """The probability of generating the passphrase using the same set of parts of speech wordlists."""
         return 1 / self.one_of
-
+    
     @property
-    def character_probability(self) -> float:
-        """The probability of generating the passphrase using alphabetical characters."""
-        return 1 / reduce(
+    def character_one_of(self) -> int:
+        """This is one of the different passphrases can be generated using the same of alphabetical characters."""
+        return reduce(
             lambda x, y: x * y,
             [
                 26 if char.isalpha() else 10 if char.isdigit() else 1
                 for char in "".join(self.words)
             ],
         )
+
+    @property
+    def character_probability(self) -> float:
+        """The probability of generating the passphrase using alphabetical characters."""
+        return 1 / self.character_one_of
 
     def __str__(self) -> str:
         """The string representation of the passphrase."""
