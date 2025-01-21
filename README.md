@@ -1,6 +1,6 @@
 # BetterPassphrase
 
-**BetterPassphrase** is a Python library and CLI tool for generating _somewhat_ secure, meaningful passphrases. It uses various parts of speech to construct grammatically correct and easy-to-remember phrases.
+**BetterPassphrase** is a Python library and CLI tool for generating *somewhat* secure, meaningful passphrases. It uses various parts of speech to construct grammatically correct and easy-to-remember phrases.
 
 ---
 
@@ -12,6 +12,8 @@
 - **Probability Calculation**: Get the uniqueness probability of the generated passphrase.
 - **Verbose Output**: Optionally display detailed information about the generation process.
 - **CLI Support**: Generate passphrases directly from the command line.
+- **Multiple Phrases**: Generate multiple passphrases at once.
+- **Output to File**: Save generated passphrases to a file.
 
 ---
 
@@ -32,7 +34,7 @@ pip install BetterPassphrase
 Use the library in your Python code to generate passphrases programmatically:
 
 ```python
-from betterpassphrase.generator import generate_phrase
+from betterpassphrase import generate_phrase
 
 # Generate a passphrase
 phrase = generate_phrase(length=6, sep="-", capitalize=True)
@@ -47,18 +49,19 @@ print(f"Probability: {1 / phrase.one_of:.2e}")
 After installing the package, you can use the `betterpassphrase` command directly from your terminal:
 
 ```bash
-betterpassphrase --length 6 --sep "" --capitalize --verbose
+betterpassphrase --length 6 --sep "" --capitalize --verbosity 1
 ```
 
 #### Options
 
-| Option            | Short Flag | Description                                   | Default         |
-|-------------------|------------|-----------------------------------------------|-----------------|
-| `--length`        | `-l`       | Number of words in the passphrase             | `6`             |
-| `--sep`           | `-s`       | Separator to use between words                | `-`             |
-| `--capitalize`    | `-c`       | Capitalize the words (true/false)             | `False`         |
-| `--output`        | `-o`       | Save passphrase to a file                     | None            |
-| `--verbose`       | `-v`       | Print verbose information (true/false)        | `False`         |
+| Option          | Short Flag | Description                                                   | Default |
+| --------------- | ---------- | ------------------------------------------------------------- | ------- |
+| `--length`      | `-l`       | Number of words in the passphrase                             | `6`     |
+| `--sep`         | `-s`       | Separator to use between words                                | `-`     |
+| `--capitalize`  | `-c`       | Capitalize the words                                          | `False` |
+| `--output`      | `-o`       | Save passphrase to a file                                     | None    |
+| `--num-phrases` | `-n`       | Number of passphrases to generate                             | `1`     |
+| `--verbosity`   | `-v`       | Verbosity level: 0 (passphrase only), 1 (basic), 2 (detailed) | `0`     |
 
 #### Example CLI Output
 
@@ -71,17 +74,25 @@ Word count:       8
 To generate a passphrase with capitalization and a custom separator:
 
 ```bash
-$ betterpassphrase --length 8 --sep "" --capitalize
-Generated phrase: TheActorAndTheSubtleDancerPlayedWonderfully
+$ betterpassphrase --length 8 --sep "=" --capitalize
+Generated phrase: The=Actor=And=The=Subtle=Dancer=Played=Wonderfully
 Word count:       8
 ```
 
-To write the passphrase to a file:
+To generate multiple passphrases:
+
+```bash
+$ betterpassphrase --length 4 --num-phrases 3
+Generated phrase: curious-monkey-jumped-over
+Generated phrase: silent-shadow-walked-alone
+Generated phrase: sloppy-photographer-developed-timer
+```
+
+To write the passphrase(s) to a file:
 
 ```bash
 $ betterpassphrase --length 8 --sep "-" --output passphrase.txt
 Generated phrase: the-actor-and-the-subtle-dancer-played-wonderfully
-Word count:       8
 
 $ cat passphrase.txt
 the-actor-and-the-subtle-dancer-played-wonderfully
@@ -90,11 +101,12 @@ the-actor-and-the-subtle-dancer-played-wonderfully
 Verbose mode can provide additional details:
 
 ```bash
-$ betterpassphrase --length 6 --verbose
-Generated phrase: the-actor-and-the-subtle-dancer-played-wonderfully
-Word count:       8
-Probability:      3.733316339298084e-18
-Parts of speech:  DETERMINER, SUBJECT_NOUN, CONJUNCTION, DETERMINER, ADJECTIVE, OBJECT_NOUN, VERB, ADVERB
+$ betterpassphrase --length 6 --verbosity 2
+Generated phrase:       what-dirty-photographer-wrapped-which-stethoscope
+Word count:             6
+Wordlist Probability:   3.64e-14
+Character Probability:  5.51e-63
+Parts of speech:        determiner, adjective, subject_noun, verb, determiner, object_noun
 ```
 
 ---
