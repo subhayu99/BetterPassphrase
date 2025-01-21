@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="BetterPassphrase",
-    version="0.1.5",
+    version="0.1.6",
     description="A Python library to generate secure, meaningful passphrases.",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
